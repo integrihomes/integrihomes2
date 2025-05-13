@@ -8,6 +8,7 @@ import { PropertyCard } from "@/components/property-card"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { FeaturedProperty } from "@/components/featured-property"
+import { VideoBackground } from "@/components/video-background"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -20,130 +21,132 @@ export default function HomePage() {
     <div className="flex min-h-screen flex-col">
       <SiteHeader />
       <main className="flex-1">
-        <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-gradient-to-b from-white to-muted">
-          <div className="container px-4 md:px-6">
-            <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
-              <div className="flex flex-col justify-center space-y-4">
-                <div className="space-y-2">
-                  <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none text-navy">
-                    Where Integrity Meets Home
-                  </h1>
-                  <p className="max-w-[600px] text-gray-600 md:text-xl">
-                    Discover, verify, and own land and property in Ghana with confidence. Secure, Simple, Verified.
-                  </p>
+        <section className="w-full relative">
+          <VideoBackground videoSrc="/videos/real-estate-background.mp4" overlayOpacity={0.6}>
+            <div className="container px-4 md:px-6 py-12 md:py-24 lg:py-32 xl:py-48">
+              <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
+                <div className="flex flex-col justify-center space-y-4">
+                  <div className="space-y-2">
+                    <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl/none text-white">
+                      Where Integrity Meets Home
+                    </h1>
+                    <p className="max-w-[600px] text-gray-100 md:text-xl">
+                      Discover, verify, and own land and property in Ghana with confidence. Secure, Simple, Verified.
+                    </p>
+                  </div>
+                  <div className="flex flex-col gap-2 min-[400px]:flex-row">
+                    <Link href="#properties">
+                      <Button size="lg" className="gap-1.5 bg-teal hover:bg-teal/90">
+                        Browse Properties
+                        <ArrowRight className="h-4 w-4" />
+                      </Button>
+                    </Link>
+                    <Link href="/contact">
+                      <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
+                        Contact an Agent
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
-                <div className="flex flex-col gap-2 min-[400px]:flex-row">
-                  <Link href="#properties">
-                    <Button size="lg" className="gap-1.5 bg-teal hover:bg-teal/90">
-                      Browse Properties
-                      <ArrowRight className="h-4 w-4" />
-                    </Button>
-                  </Link>
-                  <Link href="/contact">
-                    <Button size="lg" variant="outline" className="border-teal text-teal hover:bg-teal/10">
-                      Contact an Agent
-                    </Button>
-                  </Link>
-                </div>
-              </div>
-              <div className="bg-white p-6 shadow-lg rounded-xl border border-gray-100">
-                <div className="space-y-4">
-                  <h2 className="text-xl font-bold text-navy">Find Your Perfect Property in Ghana</h2>
-                  <div className="grid gap-4">
-                    <div className="grid gap-2">
-                      <label htmlFor="location" className="text-sm font-medium leading-none">
-                        Location
-                      </label>
-                      <div className="relative">
-                        <MapPin className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
-                        <Input id="location" placeholder="City, region, or area" className="pl-8" />
-                      </div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
+                <div className="bg-white p-6 shadow-lg rounded-xl border border-gray-100">
+                  <div className="space-y-4">
+                    <h2 className="text-xl font-bold text-navy">Find Your Perfect Property in Ghana</h2>
+                    <div className="grid gap-4">
                       <div className="grid gap-2">
-                        <label htmlFor="property-type" className="text-sm font-medium leading-none">
-                          Property Type
+                        <label htmlFor="location" className="text-sm font-medium leading-none">
+                          Location
                         </label>
-                        <Select>
-                          <SelectTrigger id="property-type">
-                            <SelectValue placeholder="Any" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="any">Any</SelectItem>
-                            <SelectItem value="land">Land</SelectItem>
-                            <SelectItem value="house">House</SelectItem>
-                            <SelectItem value="apartment">Apartment</SelectItem>
-                            <SelectItem value="commercial">Commercial</SelectItem>
-                          </SelectContent>
-                        </Select>
+                        <div className="relative">
+                          <MapPin className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
+                          <Input id="location" placeholder="City, region, or area" className="pl-8" />
+                        </div>
                       </div>
-                      <div className="grid gap-2">
-                        <label htmlFor="status" className="text-sm font-medium leading-none">
-                          Status
-                        </label>
-                        <Select>
-                          <SelectTrigger id="status">
-                            <SelectValue placeholder="For Sale" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="for-sale">For Sale</SelectItem>
-                            <SelectItem value="for-rent">For Rent</SelectItem>
-                          </SelectContent>
-                        </Select>
-                      </div>
-                    </div>
-                    <div className="grid gap-2">
-                      <div className="flex items-center justify-between">
-                        <label htmlFor="price-range" className="text-sm font-medium leading-none">
-                          Price Range (GHS)
-                        </label>
-                        <span className="text-sm text-gray-500">₵50k - ₵2M</span>
-                      </div>
-                      <Slider defaultValue={[50, 2000]} min={0} max={5000} step={10} />
-                    </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="grid gap-2">
-                        <label htmlFor="bedrooms" className="text-sm font-medium leading-none">
-                          Bedrooms
-                        </label>
-                        <Select>
-                          <SelectTrigger id="bedrooms">
-                            <SelectValue placeholder="Any" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="any">Any</SelectItem>
-                            <SelectItem value="1">1+</SelectItem>
-                            <SelectItem value="2">2+</SelectItem>
-                            <SelectItem value="3">3+</SelectItem>
-                            <SelectItem value="4">4+</SelectItem>
-                            <SelectItem value="5">5+</SelectItem>
-                          </SelectContent>
-                        </Select>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="grid gap-2">
+                          <label htmlFor="property-type" className="text-sm font-medium leading-none">
+                            Property Type
+                          </label>
+                          <Select>
+                            <SelectTrigger id="property-type">
+                              <SelectValue placeholder="Any" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="any">Any</SelectItem>
+                              <SelectItem value="land">Land</SelectItem>
+                              <SelectItem value="house">House</SelectItem>
+                              <SelectItem value="apartment">Apartment</SelectItem>
+                              <SelectItem value="commercial">Commercial</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div className="grid gap-2">
+                          <label htmlFor="status" className="text-sm font-medium leading-none">
+                            Status
+                          </label>
+                          <Select>
+                            <SelectTrigger id="status">
+                              <SelectValue placeholder="For Sale" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="for-sale">For Sale</SelectItem>
+                              <SelectItem value="for-rent">For Rent</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
                       </div>
                       <div className="grid gap-2">
-                        <label htmlFor="verified" className="text-sm font-medium leading-none">
-                          Verification
-                        </label>
-                        <Select>
-                          <SelectTrigger id="verified">
-                            <SelectValue placeholder="Any" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="any">Any</SelectItem>
-                            <SelectItem value="verified">Verified Only</SelectItem>
-                          </SelectContent>
-                        </Select>
+                        <div className="flex items-center justify-between">
+                          <label htmlFor="price-range" className="text-sm font-medium leading-none">
+                            Price Range (GHS)
+                          </label>
+                          <span className="text-sm text-gray-500">₵50k - ₵2M</span>
+                        </div>
+                        <Slider defaultValue={[50, 2000]} min={0} max={5000} step={10} />
                       </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="grid gap-2">
+                          <label htmlFor="bedrooms" className="text-sm font-medium leading-none">
+                            Bedrooms
+                          </label>
+                          <Select>
+                            <SelectTrigger id="bedrooms">
+                              <SelectValue placeholder="Any" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="any">Any</SelectItem>
+                              <SelectItem value="1">1+</SelectItem>
+                              <SelectItem value="2">2+</SelectItem>
+                              <SelectItem value="3">3+</SelectItem>
+                              <SelectItem value="4">4+</SelectItem>
+                              <SelectItem value="5">5+</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <div className="grid gap-2">
+                          <label htmlFor="verified" className="text-sm font-medium leading-none">
+                            Verification
+                          </label>
+                          <Select>
+                            <SelectTrigger id="verified">
+                              <SelectValue placeholder="Any" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="any">Any</SelectItem>
+                              <SelectItem value="verified">Verified Only</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      </div>
+                      <Button className="w-full gap-1.5 bg-teal hover:bg-teal/90">
+                        <Search className="h-4 w-4" />
+                        Search Properties
+                      </Button>
                     </div>
-                    <Button className="w-full gap-1.5 bg-teal hover:bg-teal/90">
-                      <Search className="h-4 w-4" />
-                      Search Properties
-                    </Button>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          </VideoBackground>
         </section>
 
         <section className="w-full py-12 md:py-24 lg:py-32 bg-white">
