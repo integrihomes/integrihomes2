@@ -24,6 +24,12 @@ export function SiteHeader() {
           <Link href="/properties" className="transition-colors text-navy hover:text-teal">
             Properties
           </Link>
+          <Link href="/map-search" className="transition-colors text-navy hover:text-teal">
+            Map Search
+          </Link>
+          <Link href="/blockchain" className="transition-colors text-navy hover:text-teal">
+            Blockchain
+          </Link>
           <Link href="/verification" className="transition-colors text-navy hover:text-teal">
             Our Verification
           </Link>
@@ -75,6 +81,12 @@ export function SiteHeader() {
                 </Link>
                 <Link href="/properties" className="text-navy hover:text-teal">
                   Properties
+                </Link>
+                <Link href="/map-search" className="text-navy hover:text-teal">
+                  Map Search
+                </Link>
+                <Link href="/blockchain" className="text-navy hover:text-teal">
+                  Blockchain
                 </Link>
                 <Link href="/verification" className="text-navy hover:text-teal">
                   Our Verification

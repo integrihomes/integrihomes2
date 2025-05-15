@@ -1,0 +1,238 @@
+.container {
+  display: flex;
+  height: 600px;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  margin: 2rem 0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.map {
+  flex: 1;
+  height: 100%;
+}
+
+.sidebar {
+  width: 300px;
+  background-color: white;
+  border-left: 1px solid #e5e7eb;
+  overflow-y: auto;
+}
+
+.sidebar h2 {
+  padding: 1rem;
+  margin: 0;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 1.25rem;
+  color: #0a2f4e;
+}
+
+.propertyList {
+  padding: 0.5rem;
+}
+
+.propertyItem {
+  display: flex;
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+  margin-bottom: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.propertyItem:hover {
+  background-color: #f3f4f6;
+}
+
+.propertyItem.selected {
+  background-color: #0d7c74;
+  color: white;
+}
+
+.propertyItem.selected .propertyPrice {
+  color: #fdc13a;
+}
+
+.propertyImage {
+  position: relative;
+  width: 80px;
+  height: 60px;
+  border-radius: 0.25rem;
+  overflow: hidden;
+  margin-right: 0.75rem;
+}
+
+.verifiedBadge {
+  position: absolute;
+  top: 0.25rem;
+  left: 0.25rem;
+  background-color: #0d7c74;
+  color: white;
+  border-radius: 9999px;
+  padding: 0.125rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.propertyInfo {
+  flex: 1;
+}
+
+.propertyInfo h3 {
+  margin: 0 0 0.25rem 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.propertyPrice {
+  margin: 0 0 0.25rem 0;
+  font-weight: 700;
+  color: #0d7c74;
+}
+
+.propertyAddress {
+  margin: 0;
+  font-size: 0.75rem;
+  color: #6b7280;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.marker {
+  cursor: pointer;
+}
+
+.markerContent {
+  position: relative;
+}
+
+.markerIcon {
+  width: 2rem;
+  height: 2rem;
+  background-color: #0d7c74;
+  color: white;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.markerPrice {
+  position: absolute;
+  top: -1.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  white-space: nowrap;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.popup {
+  width: 250px;
+}
+
+.popupImage {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 0.25rem 0.25rem 0 0;
+}
+
+.popupContent {
+  padding: 0.75rem;
+}
+
+.popupContent h3 {
+  margin: 0 0 0.25rem 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.popupPrice {
+  margin: 0 0 0.25rem 0;
+  font-weight: 700;
+  color: #0d7c74;
+}
+
+.popupDetails {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.75rem;
+  color: #6b7280;
+}
+
+.popupButton {
+  display: inline-block;
+  background-color: #0d7c74;
+  color: white;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.25rem;
+  text-decoration: none;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-align: center;
+  width: 100%;
+}
+
+.fallbackContainer {
+  height: 600px;
+  border-radius: 0.5rem;
+  background-color: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.fallbackContent {
+  text-align: center;
+  max-width: 400px;
+  padding: 2rem;
+}
+
+.fallbackIcon {
+  color: #0d7c74;
+  margin-bottom: 1rem;
+}
+
+.fallbackProperties {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.fallbackProperty {
+  background-color: white;
+  padding: 0.75rem;
+  border-radius: 0.25rem;
+  text-align: left;
+}
+
+.fallbackProperty h3 {
+  margin: 0 0 0.25rem 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fallbackProperty p {
+  margin: 0;
+  color: #0d7c74;
+  font-weight: 700;
+}

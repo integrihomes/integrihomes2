@@ -1,6 +1,7 @@
 import type React from "react"
 import "@/app/globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
+import { BlockchainProvider } from "@/contexts/blockchain-context"
 
 export const metadata = {
   title: "IntegriHomes - Where Integrity Meets Home",
@@ -40,7 +41,7 @@ export default function RootLayout({
       </head>
       <body className="font-opensans">
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-          {children}
+          <BlockchainProvider>{children}</BlockchainProvider>
         </ThemeProvider>
       </body>
     </html>

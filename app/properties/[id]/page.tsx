@@ -13,6 +13,7 @@ import {
   Phone,
   Mail,
   ArrowLeft,
+  Shield,
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
@@ -20,6 +21,11 @@ import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { PropertyGallery } from "@/components/property-gallery"
 import { ContactForm } from "@/components/contact-form"
+import { PropertyBlockchainDetails } from "@/components/blockchain/property-blockchain-details"
+import { PropertyTokenization } from "@/components/blockchain/property-tokenization"
+import { PropertyMarketplace } from "@/components/blockchain/property-marketplace"
+import { ConnectWalletButton } from "@/components/blockchain/connect-wallet-button"
+import { properties } from "@/data/properties"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -28,8 +34,8 @@ export const metadata: Metadata = {
 }
 
 export default function PropertyPage({ params }: { params: { id: string } }) {
-  // In a real app, you would fetch property data based on the ID
-  const property = {
+  // Find property data based on the ID
+  const property = properties.find((p) => p.id === params.id) || {
     id: params.id,
     title: "Luxury Waterfront Villa",
     price: "₵1,250,000",
@@ -39,10 +45,16 @@ export default function PropertyPage({ params }: { params: { id: string } }) {
     beds: 4,
     baths: 3.5,
     sqft: 3200,
+    location: {
+      lat: 5.5192,
+      lng: -0.3346,
+    },
     yearBuilt: 2020,
     lotSize: "0.5 acres",
     garage: "2-car attached",
     type: "Villa",
+    image: "/images/beachfront-villa.png",
+    verified: true,
     features: [
       "Waterfront property",
       "Swimming pool",
@@ -123,16 +135,23 @@ export default function PropertyPage({ params }: { params: { id: string } }) {
                     <Calendar className="h-4 w-4" />
                     Schedule Tour
                   </Button>
+                  <div className="ml-auto">
+                    <ConnectWalletButton />
+                  </div>
                 </div>
               </div>
 
               <PropertyGallery images={property.images} />
 
               <Tabs defaultValue="details" className="mt-8">
-                <TabsList className="grid w-full grid-cols-3">
+                <TabsList className="grid w-full grid-cols-4">
                   <TabsTrigger value="details">Details</TabsTrigger>
                   <TabsTrigger value="features">Features</TabsTrigger>
                   <TabsTrigger value="map">Map</TabsTrigger>
+                  <TabsTrigger value="blockchain" className="flex items-center gap-1">
+                    <Shield className="h-4 w-4" />
+                    Blockchain
+                  </TabsTrigger>
                 </TabsList>
                 <TabsContent value="details" className="pt-6">
                   <div className="space-y-6">
@@ -194,6 +213,35 @@ export default function PropertyPage({ params }: { params: { id: string } }) {
                     <p className="text-gray-500">Map view would be displayed here</p>
                   </div>
                 </TabsContent>
+                <TabsContent value="blockchain" className="pt-6">
+                  <div className="space-y-6">
+                    <div>
+                      <h2 className="text-xl font-semibold mb-4">Blockchain Features</h2>
+                      <p className="text-gray-700 leading-relaxed mb-6">
+                        This property is enabled with blockchain technology for secure ownership, transparent
+                        transactions, and fractional investment opportunities.
+                      </p>
+
+                      <div className="grid gap-6 lg:grid-cols-2">
+                        <PropertyBlockchainDetails propertyId={property.id} />
+
+                        <div className="space-y-6">
+                          <PropertyMarketplace
+                            propertyId={property.id}
+                            propertyPrice={property.price}
+                            isOwner={false} // This would be dynamically determined in a real app
+                          />
+
+                          <PropertyTokenization
+                            propertyId={property.id}
+                            propertyPrice={property.price}
+                            isOwner={false} // This would be dynamically determined in a real app
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </TabsContent>
               </Tabs>
             </div>
 
@@ -234,7 +282,7 @@ export default function PropertyPage({ params }: { params: { id: string } }) {
                   <div className="space-y-4">
                     <div className="flex gap-4">
                       <Image
-                        src="/images/apartment-east-legon.png"
+                        src="/images/modern-apartment-east-legon.png"
                         alt="Modern Apartment in East Legon"
                         width={120}
                         height={80}

@@ -2,13 +2,16 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Slider } from "@/components/ui/slider"
-import { Search, MapPin, ArrowRight, Phone, Mail, Clock, Check, Home } from "lucide-react"
+import { Search, MapPin, ArrowRight, Phone, Mail, Clock, Check, Home, MapIcon } from "lucide-react"
 import Link from "next/link"
+import Image from "next/image" // Add this import
 import { PropertyCard } from "@/components/property-card"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { FeaturedProperty } from "@/components/featured-property"
 import { VideoBackground } from "@/components/video-background"
+// Add the import for the BlockchainSection component
+import { BlockchainSection } from "@/components/blockchain-section"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -39,6 +42,12 @@ export default function HomePage() {
                       <Button size="lg" className="gap-1.5 bg-teal hover:bg-teal/90">
                         Browse Properties
                         <ArrowRight className="h-4 w-4" />
+                      </Button>
+                    </Link>
+                    <Link href="/map-search">
+                      <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 gap-1.5">
+                        <MapPin className="h-4 w-4" />
+                        Map Search
                       </Button>
                     </Link>
                     <Link href="/contact">
@@ -196,11 +205,67 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section id="featured" className="w-full py-12 md:py-24 lg:py-32 bg-muted">
+        {/* New Map Search Feature Section */}
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-muted">
+          <div className="container px-4 md:px-6">
+            <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
+              <div className="space-y-4">
+                <div className="inline-block rounded-lg bg-white px-3 py-1 text-sm text-teal">New Feature</div>
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-navy">
+                  Discover Properties on the Map
+                </h2>
+                <p className="text-gray-600 md:text-xl/relaxed">
+                  Our new interactive map search allows you to explore properties across Ghana visually. Find homes in
+                  specific neighborhoods, compare locations, and discover new areas with ease.
+                </p>
+                <ul className="space-y-2 text-gray-600">
+                  <li className="flex items-center gap-2">
+                    <Check className="h-5 w-5 text-teal" />
+                    <span>View all properties on an interactive map</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="h-5 w-5 text-teal" />
+                    <span>Filter by location, price, and property features</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="h-5 w-5 text-teal" />
+                    <span>Get detailed property information with a single click</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <Check className="h-5 w-5 text-teal" />
+                    <span>Compare properties based on their geographic location</span>
+                  </li>
+                </ul>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <Link href="/map-search">
+                    <Button size="lg" className="gap-1.5 bg-teal hover:bg-teal/90">
+                      Try Map Search
+                      <MapIcon className="h-4 w-4" />
+                    </Button>
+                  </Link>
+                </div>
+              </div>
+              <div className="relative h-[400px] md:h-[500px] rounded-lg overflow-hidden shadow-xl">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent z-10 rounded-lg"></div>
+                <Image
+                  src="/images/map-search-preview.png"
+                  alt="Map Search Feature"
+                  fill
+                  className="object-cover rounded-lg"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Blockchain Section */}
+        <BlockchainSection />
+
+        <section id="featured" className="w-full py-12 md:py-24 lg:py-32 bg-white">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
-                <div className="inline-block rounded-lg bg-white px-3 py-1 text-sm text-teal">Featured</div>
+                <div className="inline-block rounded-lg bg-muted px-3 py-1 text-sm text-teal">Featured</div>
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-navy">Featured Properties</h2>
                 <p className="max-w-[900px] text-gray-600 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                   Explore our handpicked selection of premium properties available right now in Ghana.
@@ -213,7 +278,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section id="properties" className="w-full py-12 md:py-24 lg:py-32 bg-white">
+        <section id="properties" className="w-full py-12 md:py-24 lg:py-32 bg-muted">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
@@ -233,7 +298,7 @@ export default function HomePage() {
                 baths={2}
                 sqft={1200}
                 type="Apartment"
-                image="/images/apartment-east-legon.png"
+                image="/images/modern-apartment-east-legon.png"
                 verified={true}
               />
               <PropertyCard

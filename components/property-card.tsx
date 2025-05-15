@@ -1,3 +1,5 @@
+"use client"
+
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Bed, Bath, SquareIcon as SquareFoot, Heart, Check } from "lucide-react"
@@ -15,6 +17,8 @@ interface PropertyCardProps {
   type: string
   image: string
   verified?: boolean
+  onClick?: () => void
+  isSelected?: boolean
 }
 
 export function PropertyCard({
@@ -28,11 +32,18 @@ export function PropertyCard({
   type,
   image,
   verified = false,
+  onClick,
+  isSelected = false,
 }: PropertyCardProps) {
   return (
-    <Card className="overflow-hidden group">
+    <Card
+      className={`overflow-hidden group transition-all duration-200 ${
+        isSelected ? "ring-2 ring-teal shadow-lg" : ""
+      } ${onClick ? "cursor-pointer" : ""}`}
+      onClick={onClick}
+    >
       <div className="relative">
-        <Link href={`/properties/${id}`}>
+        <Link href={`/properties/${id}`} onClick={(e) => onClick && e.preventDefault()}>
           <div className="relative h-48 overflow-hidden">
             <Image
               src={image || "/placeholder.svg"}
@@ -62,7 +73,7 @@ export function PropertyCard({
       </div>
       <CardContent className="p-4">
         <div className="space-y-2">
-          <Link href={`/properties/${id}`} className="block">
+          <Link href={`/properties/${id}`} onClick={(e) => onClick && e.preventDefault()} className="block">
             <h3 className="font-montserrat font-semibold line-clamp-1 hover:underline">{title}</h3>
           </Link>
           <p className="text-lg font-bold text-teal">{price}</p>
