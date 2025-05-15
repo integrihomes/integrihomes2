@@ -34,7 +34,6 @@ export const metadata: Metadata = {
 }
 
 export default function PropertyPage({ params }: { params: { id: string } }) {
-  // Find property data based on the ID
   const property = properties.find((p) => p.id === params.id) || {
     id: params.id,
     title: "Luxury Waterfront Villa",
@@ -215,128 +214,44 @@ export default function PropertyPage({ params }: { params: { id: string } }) {
                 </TabsContent>
                 <TabsContent value="blockchain" className="pt-6">
                   <div className="space-y-6">
-                    <div>
-                      <h2 className="text-xl font-semibold mb-4">Blockchain Features</h2>
-                      <p className="text-gray-700 leading-relaxed mb-6">
-                        This property is enabled with blockchain technology for secure ownership, transparent
-                        transactions, and fractional investment opportunities.
-                      </p>
-
-                      <div className="grid gap-6 lg:grid-cols-2">
-                        <PropertyBlockchainDetails propertyId={property.id} />
-
-                        <div className="space-y-6">
-                          <PropertyMarketplace
-                            propertyId={property.id}
-                            propertyPrice={property.price}
-                            isOwner={false} // This would be dynamically determined in a real app
-                          />
-
-                          <PropertyTokenization
-                            propertyId={property.id}
-                            propertyPrice={property.price}
-                            isOwner={false} // This would be dynamically determined in a real app
-                          />
-                        </div>
-                      </div>
-                    </div>
+                    <PropertyBlockchainDetails propertyId={property.id} />
+                    <PropertyTokenization propertyId={property.id} />
+                    <PropertyMarketplace propertyId={property.id} />
                   </div>
                 </TabsContent>
               </Tabs>
             </div>
 
+            {/* Sidebar */}
             <div className="space-y-6">
               <Card>
                 <CardContent className="p-6">
-                  <div className="flex items-center gap-4 mb-6">
+                  <div className="flex items-center gap-4">
                     <Image
-                      src={property.agent.image || "/placeholder.svg"}
+                      src={property.agent.image}
                       alt={property.agent.name}
-                      width={60}
-                      height={60}
+                      width={64}
+                      height={64}
                       className="rounded-full"
                     />
                     <div>
-                      <h3 className="font-semibold">{property.agent.name}</h3>
-                      <p className="text-sm text-gray-500">Listing Agent</p>
+                      <p className="font-medium">{property.agent.name}</p>
+                      <p className="text-sm text-gray-500">{property.agent.email}</p>
                     </div>
                   </div>
-                  <div className="grid gap-4 mb-6">
-                    <Button className="w-full gap-1.5 bg-teal hover:bg-teal/90">
+                  <div className="mt-4 space-y-2">
+                    <Button variant="outline" size="sm" className="w-full gap-2">
                       <Phone className="h-4 w-4" />
                       Call Agent
                     </Button>
-                    <Button variant="outline" className="w-full gap-1.5 border-teal text-teal hover:bg-teal/10">
+                    <Button variant="outline" size="sm" className="w-full gap-2">
                       <Mail className="h-4 w-4" />
                       Email Agent
                     </Button>
                   </div>
-                  <Separator className="my-6" />
-                  <ContactForm />
                 </CardContent>
               </Card>
-
-              <Card>
-                <CardContent className="p-6">
-                  <h3 className="font-semibold mb-4">Similar Properties</h3>
-                  <div className="space-y-4">
-                    <div className="flex gap-4">
-                      <Image
-                        src="/images/modern-apartment-east-legon.png"
-                        alt="Modern Apartment in East Legon"
-                        width={120}
-                        height={80}
-                        className="rounded-md object-cover"
-                      />
-                      <div>
-                        <h4 className="font-medium text-sm">Modern Apartment</h4>
-                        <p className="text-sm text-teal">₵450,000</p>
-                        <div className="flex items-center gap-2 mt-1 text-xs text-gray-500">
-                          <span>2 Beds</span>
-                          <span>•</span>
-                          <span>2 Baths</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex gap-4">
-                      <Image
-                        src="/images/family-home-cantonments.png"
-                        alt="Spacious Family Home in Cantonments"
-                        width={120}
-                        height={80}
-                        className="rounded-md object-cover"
-                      />
-                      <div>
-                        <h4 className="font-medium text-sm">Family Home</h4>
-                        <p className="text-sm text-teal">₵750,000</p>
-                        <div className="flex items-center gap-2 mt-1 text-xs text-gray-500">
-                          <span>4 Beds</span>
-                          <span>•</span>
-                          <span>3 Baths</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="flex gap-4">
-                      <Image
-                        src="/images/colonial-home-labone.png"
-                        alt="Colonial Style Home in Labone"
-                        width={120}
-                        height={80}
-                        className="rounded-md object-cover"
-                      />
-                      <div>
-                        <h4 className="font-medium text-sm">Colonial Style Home</h4>
-                        <p className="text-sm text-teal">₵850,000</p>
-                        <div className="flex items-center gap-2 mt-1 text-xs text-gray-500">
-                          <span>4 Beds</span>
-                          <span>•</span>
-                          <span>3 Baths</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+              <ContactForm />
             </div>
           </div>
         </div>

@@ -2,15 +2,14 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Slider } from "@/components/ui/slider"
-import { Search, MapPin, ArrowRight, Phone, Mail, Clock, Check, Home, MapIcon } from "lucide-react"
+import { Search, MapPin, ArrowRight, Phone, Mail, Clock, Check, Home, MapIcon } from 'lucide-react'
 import Link from "next/link"
-import Image from "next/image" // Add this import
+import Image from "next/image"
 import { PropertyCard } from "@/components/property-card"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { FeaturedProperty } from "@/components/featured-property"
 import { VideoBackground } from "@/components/video-background"
-// Add the import for the BlockchainSection component
 import { BlockchainSection } from "@/components/blockchain-section"
 import type { Metadata } from "next"
 

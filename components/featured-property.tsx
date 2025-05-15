@@ -1,7 +1,15 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { Bed, Bath, SquareIcon as SquareFoot, ArrowRight, Check, ChevronLeft, ChevronRight } from "lucide-react"
+import {
+  Bed,
+  Bath,
+  SquareIcon as SquareFoot,
+  ArrowRight,
+  Check,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useState } from "react"
@@ -82,29 +90,36 @@ export function FeaturedProperty() {
           {images.map((_, index) => (
             <button
               key={index}
-              className={`w-2 h-2 rounded-full ${index === currentImage ? "bg-white" : "bg-white/50"}`}
+              className={`w-2 h-2 rounded-full ${
+                index === currentImage ? "bg-white" : "bg-white/50"
+              }`}
               onClick={() => setCurrentImage(index)}
               aria-label={`Go to image ${index + 1}`}
             />
           ))}
         </div>
       </div>
+
       <div className="space-y-4">
         <div className="flex items-center gap-2">
-          <div className="inline-block rounded-full bg-muted px-3 py-1 text-sm font-medium text-teal">Featured</div>
+          <div className="inline-block rounded-full bg-muted px-3 py-1 text-sm font-medium text-teal">
+            Featured
+          </div>
           <div className="inline-flex items-center rounded-full bg-teal text-white px-3 py-1 text-sm font-medium gap-1">
             <Check className="h-3 w-3 text-gold" />
             <span>Verified</span>
           </div>
         </div>
+
         <h3 className="text-2xl font-bold text-navy">Luxury Beachfront Villa in Kokrobite</h3>
         <p className="text-xl font-bold text-teal">₵1,250,000</p>
         <p className="text-gray-600">
           This stunning beachfront villa offers breathtaking ocean views and luxurious living spaces. The property
-          features an open floor plan with high ceilings, floor-to-ceiling windows, and premium finishes throughout. The
-          gourmet kitchen includes top-of-the-line appliances and a large island with seating. Master bedroom with
+          features an open floor plan with high ceilings, floor-to-ceiling windows, and premium finishes throughout.
+          The gourmet kitchen includes top-of-the-line appliances and a large island with seating. Master bedroom with
           panoramic ocean views. Fully verified with clear title documentation.
         </p>
+
         <div className="flex gap-6 text-gray-600">
           <div className="flex items-center gap-1">
             <Bed className="h-5 w-5" />
@@ -119,6 +134,7 @@ export function FeaturedProperty() {
             <span>3,200 sq ft</span>
           </div>
         </div>
+
         <Link href="/properties/featured">
           <Button className="gap-1.5 bg-teal hover:bg-teal/90">
             View Property
