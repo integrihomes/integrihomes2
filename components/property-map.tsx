@@ -8,7 +8,7 @@ import Image from "next/image"
 import Link from "next/link"
 import type { Property } from "@/data/properties"
 
-// Fallback static map
+// Create a fallback map component that doesn't rely on mapbox-gl
 function FallbackMap({
   properties,
   height,
@@ -85,10 +85,13 @@ export function PropertyMap({
   const [popupInfo, setPopupInfo] = useState<Property | null>(null)
   const mapRef = useRef<any>(null)
 
+  // Check if mapbox-gl can be loaded
   useEffect(() => {
     const loadMapLibrary = async () => {
       try {
+        // Try to dynamically import mapbox-gl
         await import("mapbox-gl/dist/mapbox-gl.css")
+        // Just check if we can import it, don't actually use the import
         await import("mapbox-gl")
         setMapLibraryLoaded(true)
       } catch (error) {
@@ -100,6 +103,7 @@ export function PropertyMap({
     loadMapLibrary()
   }, [])
 
+  // Set popup info when selectedPropertyId changes
   useEffect(() => {
     if (selectedPropertyId) {
       const property = properties.find((p) => p.id === selectedPropertyId)
@@ -116,6 +120,7 @@ export function PropertyMap({
     }
   }
 
+  // If mapbox-gl couldn't be loaded, show the fallback map
   if (!mapLibraryLoaded) {
     return (
       <FallbackMap
@@ -127,24 +132,36 @@ export function PropertyMap({
     )
   }
 
+  // This code will only run if mapbox-gl was successfully loaded
+  // We need to dynamically import the Map component to avoid the error
   const MapComponent = () => {
     const [MapGL, setMapGL] = useState<any>(null)
 
     useEffect(() => {
+      // Dynamically import react-map-gl components
       import("react-map-gl").then((module) => {
+        // Import specific named exports instead of the default export
         const { Map, Marker, Popup, NavigationControl, FullscreenControl } = module
-        setMapGL({ Map, Marker, Popup, NavigationControl, FullscreenControl })
+        setMapGL({
+          Map,
+          Marker,
+          Popup,
+          NavigationControl,
+          FullscreenControl,
+        })
       })
     }, [])
 
-    if (!MapGL) return <div className="flex items-center justify-center h-full">Loading map...</div>
+    if (!MapGL) {
+      return <div className="flex items-center justify-center h-full">Loading map...</div>
+    }
 
     const { Map, Marker, Popup, NavigationControl, FullscreenControl } = MapGL
 
     return (
       <Map
         ref={mapRef}
-        mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
+        mapboxAccessToken="pk.eyJ1IjoiaW50ZWdyaWhvbWVzIiwiYSI6ImNscXRqcWRxcjBkdXEyanBsOGx1NWdtdmQifQ.Bj1XKGJ-2FTnX-oYZ0riDg"
         initialViewState={initialViewState}
         mapStyle="mapbox://styles/mapbox/streets-v12"
         style={{ width: "100%", height: "100%" }}
@@ -189,7 +206,7 @@ export function PropertyMap({
             latitude={popupInfo.location.lat}
             anchor="bottom"
             onClose={() => setPopupInfo(null)}
-            closeButton
+            closeButton={true}
             closeOnClick={false}
             className="property-popup"
             maxWidth="300px"
