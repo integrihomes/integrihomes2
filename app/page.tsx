@@ -81,17 +81,6 @@ export default function HomePage() {
           <section className="w-full relative overflow-hidden">
             {/* Background elements */}
             <div className="absolute inset-0 bg-gradient-to-br from-navy via-navy/90 to-teal/80 z-0"></div>
-
-            {/* Fixed grid background */}
-            <div
-              className="absolute inset-0 z-0"
-              style={{
-                backgroundImage:
-                  "linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px)",
-                backgroundSize: "32px 32px",
-              }}
-            ></div>
-
             <div className="absolute right-0 top-0 h-full w-1/2 bg-teal/10 rounded-l-full blur-3xl z-0"></div>
 
             {/* Animated dots */}
@@ -477,17 +466,6 @@ export default function HomePage() {
           <section id="cta" className="w-full py-12 md:py-24 lg:py-32 text-white relative overflow-hidden">
             {/* Background elements */}
             <div className="absolute inset-0 bg-gradient-to-br from-navy via-navy/90 to-teal/80 z-0"></div>
-
-            {/* Fixed grid background */}
-            <div
-              className="absolute inset-0 z-0"
-              style={{
-                backgroundImage:
-                  "linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px)",
-                backgroundSize: "32px 32px",
-              }}
-            ></div>
-
             <div className="absolute right-0 top-0 h-full w-1/2 bg-teal/10 rounded-l-full blur-3xl z-0"></div>
 
             {/* Animated dots */}
