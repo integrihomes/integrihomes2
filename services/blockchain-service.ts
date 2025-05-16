@@ -9,7 +9,7 @@ const PROPERTY_MARKETPLACE_ADDRESS = "0x456...def" // Example address
 const PROPERTY_TOKEN_ADDRESS = "0x789...ghi" // Example address
 
 export class BlockchainService {
-  provider: ethers.providers.Web3Provider | null = null
+  provider: ethers.BrowserProvider | null = null
   signer: ethers.Signer | null = null
   titleContract: ethers.Contract | null = null
   marketplaceContract: ethers.Contract | null = null
@@ -24,8 +24,8 @@ export class BlockchainService {
         await window.ethereum.request({ method: "eth_requestAccounts" })
 
         // Create Web3 provider
-        this.provider = new ethers.providers.Web3Provider(window.ethereum)
-        this.signer = this.provider.getSigner()
+        this.provider = new ethers.BrowserProvider(window.ethereum)
+        this.signer = await this.provider.getSigner()
 
         // Initialize contracts
         this.titleContract = new ethers.Contract(PROPERTY_TITLE_ADDRESS, PropertyTitleABI, this.signer)
@@ -82,7 +82,7 @@ export class BlockchainService {
       owner: propertyData.owner,
       dataHash: propertyData.dataHash,
       documentHash: propertyData.documentHash,
-      timestamp: new Date(propertyData.timestamp.toNumber() * 1000),
+      timestamp: new Date(Number(propertyData.timestamp) * 1000),
       isVerified: propertyData.isVerified,
     }
   }
@@ -101,7 +101,7 @@ export class BlockchainService {
   async listPropertyForSale(propertyId: string, priceInEth: string) {
     if (!this.marketplaceContract) throw new Error("Marketplace contract not initialized")
 
-    const priceInWei = ethers.utils.parseEther(priceInEth)
+    const priceInWei = ethers.parseEther(priceInEth)
     const tx = await this.marketplaceContract.listProperty(propertyId, priceInWei)
 
     return await tx.wait()
@@ -111,7 +111,7 @@ export class BlockchainService {
   async buyProperty(propertyId: string, priceInEth: string) {
     if (!this.marketplaceContract) throw new Error("Marketplace contract not initialized")
 
-    const priceInWei = ethers.utils.parseEther(priceInEth)
+    const priceInWei = ethers.parseEther(priceInEth)
     const tx = await this.marketplaceContract.buyProperty(propertyId, {
       value: priceInWei,
     })
@@ -125,7 +125,7 @@ export class BlockchainService {
   async tokenizeProperty(propertyId: string, totalShares: number, pricePerShareInEth: string) {
     if (!this.tokenContract) throw new Error("Token contract not initialized")
 
-    const pricePerShareInWei = ethers.utils.parseEther(pricePerShareInEth)
+    const pricePerShareInWei = ethers.parseEther(pricePerShareInEth)
     const tx = await this.tokenContract.tokenizeProperty(propertyId, totalShares, pricePerShareInWei)
 
     return await tx.wait()
@@ -136,7 +136,7 @@ export class BlockchainService {
     if (!this.tokenContract) throw new Error("Token contract not initialized")
 
     const propertyData = await this.tokenContract.getPropertyTokenInfo(propertyId)
-    const totalCost = propertyData.pricePerShare.mul(shares)
+    const totalCost = propertyData.pricePerShare * BigInt(shares)
 
     const tx = await this.tokenContract.buyShares(propertyId, shares, {
       value: totalCost,
@@ -150,7 +150,7 @@ export class BlockchainService {
     if (!this.tokenContract) throw new Error("Token contract not initialized")
 
     const shares = await this.tokenContract.sharesOf(propertyId, userAddress)
-    return shares.toNumber()
+    return Number(shares)
   }
 
   // Get property tokenization info
@@ -160,9 +160,9 @@ export class BlockchainService {
     const info = await this.tokenContract.getPropertyTokenInfo(propertyId)
 
     return {
-      totalShares: info.totalShares.toNumber(),
-      availableShares: info.availableShares.toNumber(),
-      pricePerShare: ethers.utils.formatEther(info.pricePerShare),
+      totalShares: Number(info.totalShares),
+      availableShares: Number(info.availableShares),
+      pricePerShare: ethers.formatEther(info.pricePerShare),
       isActive: info.isActive,
     }
   }

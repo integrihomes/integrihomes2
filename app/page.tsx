@@ -81,7 +81,17 @@ export default function HomePage() {
           <section className="w-full relative overflow-hidden">
             {/* Background elements */}
             <div className="absolute inset-0 bg-gradient-to-br from-navy via-navy/90 to-teal/80 z-0"></div>
-            <div className="absolute inset-0 bg-grid-white/5 z-0"></div>
+
+            {/* Fixed grid background */}
+            <div
+              className="absolute inset-0 z-0"
+              style={{
+                backgroundImage:
+                  "linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px)",
+                backgroundSize: "32px 32px",
+              }}
+            ></div>
+
             <div className="absolute right-0 top-0 h-full w-1/2 bg-teal/10 rounded-l-full blur-3xl z-0"></div>
 
             {/* Animated dots */}
@@ -231,12 +241,8 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Add this to your globals.css or as a style tag */}
+            {/* Updated styles for dots */}
             <style jsx>{`
-              .bg-grid-white\/5 {
-                background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(255 255 255 / 0.05)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
-              }
-              
               .integrity-dots {
                 position: absolute;
                 width: 100%;
@@ -471,7 +477,17 @@ export default function HomePage() {
           <section id="cta" className="w-full py-12 md:py-24 lg:py-32 text-white relative overflow-hidden">
             {/* Background elements */}
             <div className="absolute inset-0 bg-gradient-to-br from-navy via-navy/90 to-teal/80 z-0"></div>
-            <div className="absolute inset-0 bg-grid-white/5 z-0"></div>
+
+            {/* Fixed grid background */}
+            <div
+              className="absolute inset-0 z-0"
+              style={{
+                backgroundImage:
+                  "linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px)",
+                backgroundSize: "32px 32px",
+              }}
+            ></div>
+
             <div className="absolute right-0 top-0 h-full w-1/2 bg-teal/10 rounded-l-full blur-3xl z-0"></div>
 
             {/* Animated dots */}
