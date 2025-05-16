@@ -16,6 +16,7 @@ export type Property = {
   yearBuilt?: number
   lotSize?: string
   garage?: string
+  description?: string
   features?: string[]
   agent?: {
     name: string
@@ -42,6 +43,16 @@ export const properties: Property[] = [
       lat: 5.6361,
       lng: -0.1633,
     },
+    description:
+      "A modern apartment with contemporary finishes, located in the heart of East Legon. Features include an open floor plan, updated kitchen, and a spacious balcony with city views.",
+    features: ["Open floor plan", "Updated kitchen", "Balcony", "City views", "Security system"],
+    images: ["/images/modern-apartment-east-legon.png"],
+    agent: {
+      name: "David Mensah",
+      phone: "(+233) 24-555-1234",
+      email: "david.mensah@integrihomes.co",
+      image: "/placeholder.svg?height=150&width=150&text=DM",
+    },
   },
   {
     id: "2",
@@ -57,6 +68,16 @@ export const properties: Property[] = [
     location: {
       lat: 5.5788,
       lng: -0.1761,
+    },
+    description:
+      "A spacious family home in the prestigious Cantonments area. This property features 4 bedrooms, 3 bathrooms, a large garden, and a modern kitchen perfect for family gatherings.",
+    features: ["Large garden", "Modern kitchen", "Family room", "Master suite", "Security system"],
+    images: ["/images/family-home-cantonments.png"],
+    agent: {
+      name: "Sarah Johnson",
+      phone: "(+233) 24-123-4567",
+      email: "sarah.johnson@integrihomes.co",
+      image: "/placeholder.svg?height=150&width=150&text=SJ",
     },
   },
   {
@@ -74,6 +95,20 @@ export const properties: Property[] = [
       lat: 5.5192,
       lng: -0.3662,
     },
+    description:
+      "Stunning beachfront property with direct access to the beautiful shores of Kokrobite. Enjoy breathtaking ocean views from the comfort of your own home.",
+    features: ["Beachfront", "Ocean views", "Private access to beach", "Outdoor patio", "Modern design"],
+    images: [
+      "/images/beachfront-villa.png",
+      "/images/beachfront-villa-interior.png",
+      "/images/beachfront-villa-bedroom.png",
+    ],
+    agent: {
+      name: "Michael Addo",
+      phone: "(+233) 24-987-6543",
+      email: "michael.addo@integrihomes.co",
+      image: "/placeholder.svg?height=150&width=150&text=MA",
+    },
   },
   {
     id: "4",
@@ -84,12 +119,23 @@ export const properties: Property[] = [
     baths: 0,
     sqft: 5000,
     type: "Land",
-    image: "/images/residential-land-tema.png",
+    image: "/images/residential-land-tema-new.png",
     verified: true,
     location: {
       lat: 5.6698,
       lng: -0.0167,
     },
+    description:
+      "Prime residential land in a developing area of Tema. This 5000 sq ft plot is perfect for building your dream home or for investment purposes. The land has been cleared and is ready for development.",
+    features: ["Cleared land", "Ready for development", "Good road access", "Utilities nearby", "Residential zoning"],
+    images: ["/images/residential-land-tema-new.png", "/images/residential-land.jpeg"],
+    agent: {
+      name: "Grace Owusu",
+      phone: "(+233) 24-222-3333",
+      email: "grace.owusu@integrihomes.co",
+      image: "/placeholder.svg?height=150&width=150&text=GO",
+    },
+    lotSize: "5000 sq ft",
   },
   {
     id: "5",
@@ -105,6 +151,16 @@ export const properties: Property[] = [
     location: {
       lat: 5.5602,
       lng: -0.1752,
+    },
+    description:
+      "Beautiful colonial style home in the prestigious Labone area. This property features classic architecture with modern amenities, a spacious garden, and a swimming pool.",
+    features: ["Colonial architecture", "Swimming pool", "Garden", "Modern amenities", "Security system"],
+    images: ["/images/colonial-home-labone.png"],
+    agent: {
+      name: "James Kwame",
+      phone: "(+233) 24-444-5555",
+      email: "james.kwame@integrihomes.co",
+      image: "/placeholder.svg?height=150&width=150&text=JK",
     },
   },
   {
@@ -122,6 +178,16 @@ export const properties: Property[] = [
       lat: 5.6025,
       lng: -0.1789,
     },
+    description:
+      "Compact and stylish studio apartment in the Airport Residential area. Perfect for young professionals or as an investment property with high rental yield potential.",
+    features: ["Modern design", "Built-in storage", "Gym access", "Security", "Close to amenities"],
+    images: ["/images/studio-apartment-airport.png"],
+    agent: {
+      name: "Sophia Mensah",
+      phone: "(+233) 24-777-8888",
+      email: "sophia.mensah@integrihomes.co",
+      image: "/placeholder.svg?height=150&width=150&text=SM",
+    },
   },
   {
     id: "7",
@@ -137,6 +203,16 @@ export const properties: Property[] = [
     location: {
       lat: 6.346,
       lng: 0.0641,
+    },
+    description:
+      "Luxurious lakeside property with stunning views of Lake Volta. This 5-bedroom home features high-end finishes, a private dock, and expansive outdoor living spaces.",
+    features: ["Lakefront", "Private dock", "Outdoor living spaces", "High-end finishes", "Guest house"],
+    images: ["/images/lakeside-property-akosombo.png"],
+    agent: {
+      name: "Daniel Osei",
+      phone: "(+233) 24-999-0000",
+      email: "daniel.osei@integrihomes.co",
+      image: "/placeholder.svg?height=150&width=150&text=DO",
     },
   },
   {
@@ -154,5 +230,22 @@ export const properties: Property[] = [
       lat: 6.6885,
       lng: -1.6244,
     },
+    description:
+      "Prime commercial land in the heart of Kumasi's business district. Excellent opportunity for retail, office, or mixed-use development in a high-traffic area.",
+    features: [
+      "Commercial zoning",
+      "High traffic area",
+      "Corner lot",
+      "All utilities available",
+      "Development potential",
+    ],
+    images: ["/images/commercial-land-kumasi.png"],
+    agent: {
+      name: "Abena Koranteng",
+      phone: "(+233) 24-111-2222",
+      email: "abena.koranteng@integrihomes.co",
+      image: "/placeholder.svg?height=150&width=150&text=AK",
+    },
+    lotSize: "10000 sq ft",
   },
 ]

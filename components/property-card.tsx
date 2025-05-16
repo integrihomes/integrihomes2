@@ -35,6 +35,9 @@ export function PropertyCard({
   onClick,
   isSelected = false,
 }: PropertyCardProps) {
+  // Generate a placeholder image based on property type if no image is provided
+  const placeholderImage = `/placeholder.svg?height=400&width=600&query=real estate ${type.toLowerCase()} property landscape view`
+
   return (
     <Card
       className={`overflow-hidden group transition-all duration-200 ${
@@ -46,9 +49,11 @@ export function PropertyCard({
         <Link href={`/properties/${id}`} onClick={(e) => onClick && e.preventDefault()}>
           <div className="relative h-48 overflow-hidden">
             <Image
-              src={image || "/placeholder.svg"}
+              src={image || placeholderImage}
               alt={title}
               fill
+              sizes="(max-width: 768px) 100vw, 300px"
+              priority={id === "4"} // Prioritize loading the residential land image
               className="object-cover group-hover:scale-105 transition-transform duration-500"
             />
           </div>

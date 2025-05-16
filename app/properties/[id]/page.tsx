@@ -87,6 +87,10 @@ export default function PropertyPage({ params }: { params: { id: string } }) {
     ],
   }
 
+  // Ensure features and images are always arrays
+  const features = property.features || []
+  const images = property.images || [property.image]
+
   return (
     <div className="flex min-h-screen flex-col">
       <SiteHeader />
@@ -144,7 +148,7 @@ export default function PropertyPage({ params }: { params: { id: string } }) {
                 </div>
               </div>
 
-              <PropertyGallery images={property.images} />
+              <PropertyGallery images={images} />
 
               <Tabs defaultValue="details" className="mt-8">
                 <TabsList className="grid w-full grid-cols-5">
@@ -164,7 +168,9 @@ export default function PropertyPage({ params }: { params: { id: string } }) {
                   <div className="space-y-6">
                     <div>
                       <h2 className="text-xl font-semibold mb-4">Property Description</h2>
-                      <p className="text-gray-700 leading-relaxed">{property.description}</p>
+                      <p className="text-gray-700 leading-relaxed">
+                        {property.description || "No description available."}
+                      </p>
                     </div>
                     <Separator />
                     <div>
@@ -174,14 +180,18 @@ export default function PropertyPage({ params }: { params: { id: string } }) {
                           <p className="text-sm text-gray-500">Property Type</p>
                           <p className="font-medium">{property.type}</p>
                         </div>
-                        <div>
-                          <p className="text-sm text-gray-500">Year Built</p>
-                          <p className="font-medium">{property.yearBuilt}</p>
-                        </div>
-                        <div>
-                          <p className="text-sm text-gray-500">Lot Size</p>
-                          <p className="font-medium">{property.lotSize}</p>
-                        </div>
+                        {property.yearBuilt && (
+                          <div>
+                            <p className="text-sm text-gray-500">Year Built</p>
+                            <p className="font-medium">{property.yearBuilt}</p>
+                          </div>
+                        )}
+                        {property.lotSize && (
+                          <div>
+                            <p className="text-sm text-gray-500">Lot Size</p>
+                            <p className="font-medium">{property.lotSize}</p>
+                          </div>
+                        )}
                         <div>
                           <p className="text-sm text-gray-500">Bedrooms</p>
                           <p className="font-medium">{property.beds}</p>
@@ -194,10 +204,12 @@ export default function PropertyPage({ params }: { params: { id: string } }) {
                           <p className="text-sm text-gray-500">Square Feet</p>
                           <p className="font-medium">{property.sqft}</p>
                         </div>
-                        <div>
-                          <p className="text-sm text-gray-500">Garage</p>
-                          <p className="font-medium">{property.garage}</p>
-                        </div>
+                        {property.garage && (
+                          <div>
+                            <p className="text-sm text-gray-500">Garage</p>
+                            <p className="font-medium">{property.garage}</p>
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
@@ -205,14 +217,18 @@ export default function PropertyPage({ params }: { params: { id: string } }) {
                 <TabsContent value="features" className="pt-6">
                   <div>
                     <h2 className="text-xl font-semibold mb-4">Property Features</h2>
-                    <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3">
-                      {property.features.map((feature, index) => (
-                        <li key={index} className="flex items-center gap-2">
-                          <div className="h-2 w-2 rounded-full bg-teal" />
-                          {feature}
-                        </li>
-                      ))}
-                    </ul>
+                    {features.length > 0 ? (
+                      <ul className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3">
+                        {features.map((feature, index) => (
+                          <li key={index} className="flex items-center gap-2">
+                            <div className="h-2 w-2 rounded-full bg-teal" />
+                            {feature}
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="text-gray-500">No features listed for this property.</p>
+                    )}
                   </div>
                 </TabsContent>
                 <TabsContent value="map" className="pt-6">
@@ -282,26 +298,30 @@ export default function PropertyPage({ params }: { params: { id: string } }) {
                 <CardContent className="p-6">
                   <div className="flex items-center gap-4 mb-6">
                     <Image
-                      src={property.agent.image || "/placeholder.svg"}
-                      alt={property.agent.name}
+                      src={property.agent?.image || "/placeholder.svg?height=60&width=60&text=Agent"}
+                      alt={property.agent?.name || "Property Agent"}
                       width={60}
                       height={60}
                       className="rounded-full"
                     />
                     <div>
-                      <h3 className="font-semibold">{property.agent.name}</h3>
+                      <h3 className="font-semibold">{property.agent?.name || "Contact Agent"}</h3>
                       <p className="text-sm text-gray-500">Property Agent</p>
                     </div>
                   </div>
                   <div className="space-y-4">
-                    <div className="flex items-center gap-2">
-                      <Phone className="h-4 w-4 text-gray-500" />
-                      <span>{property.agent.phone}</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Mail className="h-4 w-4 text-gray-500" />
-                      <span>{property.agent.email}</span>
-                    </div>
+                    {property.agent?.phone && (
+                      <div className="flex items-center gap-2">
+                        <Phone className="h-4 w-4 text-gray-500" />
+                        <span>{property.agent.phone}</span>
+                      </div>
+                    )}
+                    {property.agent?.email && (
+                      <div className="flex items-center gap-2">
+                        <Mail className="h-4 w-4 text-gray-500" />
+                        <span>{property.agent.email}</span>
+                      </div>
+                    )}
                     <Button className="w-full bg-teal hover:bg-teal/90">Contact Agent</Button>
                   </div>
                 </CardContent>
