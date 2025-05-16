@@ -53,7 +53,6 @@ export function PropertyCard({
             />
           </div>
         </Link>
-
         <Button
           variant="ghost"
           size="icon"
@@ -62,11 +61,9 @@ export function PropertyCard({
           <Heart className="h-4 w-4" />
           <span className="sr-only">Add to favorites</span>
         </Button>
-
         <div className="absolute bottom-2 left-2 rounded-full bg-white/80 backdrop-blur-sm px-2 py-1 text-xs font-medium">
           {type}
         </div>
-
         {verified && (
           <div className="absolute top-2 left-2 rounded-full bg-teal text-white px-2 py-1 text-xs font-medium flex items-center gap-1">
             <Check className="h-3 w-3 text-gold" />
@@ -74,7 +71,6 @@ export function PropertyCard({
           </div>
         )}
       </div>
-
       <CardContent className="p-4">
         <div className="space-y-2">
           <Link href={`/properties/${id}`} onClick={(e) => onClick && e.preventDefault()} className="block">
@@ -84,7 +80,6 @@ export function PropertyCard({
           <p className="text-sm text-gray-500 line-clamp-1">{address}</p>
         </div>
       </CardContent>
-
       <CardFooter className="p-4 pt-0 flex justify-between text-sm text-gray-500">
         {beds > 0 && (
           <div className="flex items-center gap-1">

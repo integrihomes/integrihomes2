@@ -34,7 +34,6 @@ export function SiteFooter() {
               </Link>
             </div>
           </div>
-
           <div>
             <h3 className="font-montserrat font-semibold mb-4 text-white">Quick Links</h3>
             <nav className="grid gap-3 text-sm">
@@ -55,7 +54,6 @@ export function SiteFooter() {
               </Link>
             </nav>
           </div>
-
           <div>
             <h3 className="font-montserrat font-semibold mb-4 text-white">Property Types</h3>
             <nav className="grid gap-3 text-sm">
@@ -76,7 +74,6 @@ export function SiteFooter() {
               </Link>
             </nav>
           </div>
-
           <div>
             <h3 className="font-montserrat font-semibold mb-4 text-white">Resources</h3>
             <nav className="grid gap-3 text-sm">
@@ -98,7 +95,6 @@ export function SiteFooter() {
             </nav>
           </div>
         </div>
-
         <div className="mt-12 border-t border-gray-700 pt-8 text-center text-sm text-gray-300">
           <p>&copy; {new Date().getFullYear()} IntegriHomes. All rights reserved.</p>
           <div className="mt-2 flex justify-center gap-4">

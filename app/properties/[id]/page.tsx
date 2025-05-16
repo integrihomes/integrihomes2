@@ -10,23 +10,26 @@ import {
   Heart,
   Share,
   Calendar,
-  Phone,
-  Mail,
   ArrowLeft,
   Shield,
+  Phone,
+  Mail,
+  Activity,
 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { SiteHeader } from "@/components/site-header"
-import { SiteFooter } from "@/components/site-footer"
 import { PropertyGallery } from "@/components/property-gallery"
-import { ContactForm } from "@/components/contact-form"
 import { PropertyBlockchainDetails } from "@/components/blockchain/property-blockchain-details"
 import { PropertyTokenization } from "@/components/blockchain/property-tokenization"
 import { PropertyMarketplace } from "@/components/blockchain/property-marketplace"
 import { ConnectWalletButton } from "@/components/blockchain/connect-wallet-button"
 import { properties } from "@/data/properties"
 import type { Metadata } from "next"
+import PropertyMap from "@/components/PropertyMap"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { PropertyAnalytics } from "@/components/property-analytics"
+import { getPropertyAnalytics } from "@/services/analytics-service"
 
 export const metadata: Metadata = {
   title: "Property Details | IntegriHomes",
@@ -34,13 +37,14 @@ export const metadata: Metadata = {
 }
 
 export default function PropertyPage({ params }: { params: { id: string } }) {
+  // Find property data based on the ID
   const property = properties.find((p) => p.id === params.id) || {
     id: params.id,
     title: "Luxury Waterfront Villa",
     price: "₵1,250,000",
     address: "Kokrobite Beach, Greater Accra, Ghana",
     description:
-      "This stunning waterfront villa offers breathtaking ocean views and luxurious living spaces. The property features an open floor plan with high ceilings, floor-to-ceiling windows, and premium finishes throughout. The gourmet kitchen is equipped with top-of-the-line appliances and a large center island. The primary suite includes a spa-like bathroom and a private balcony overlooking the ocean. Outside, you'll find a beautifully landscaped yard with a swimming pool, outdoor kitchen, and direct beach access.",
+      "This stunning waterfront villa offers breathtaking ocean views and luxurious living spaces. The property features an open floor plan with high ceilings, floor-to-ceiling windows, and premium finishes throughout. The gourmet kitchen is equipped with top-of-line appliances and a large center island. The primary suite includes a spa-like bathroom and a private balcony overlooking the ocean. Outside, you'll find a beautifully landscaped yard with a swimming pool, outdoor kitchen, and direct beach access.",
     beds: 4,
     baths: 3.5,
     sqft: 3200,
@@ -143,13 +147,17 @@ export default function PropertyPage({ params }: { params: { id: string } }) {
               <PropertyGallery images={property.images} />
 
               <Tabs defaultValue="details" className="mt-8">
-                <TabsList className="grid w-full grid-cols-4">
+                <TabsList className="grid w-full grid-cols-5">
                   <TabsTrigger value="details">Details</TabsTrigger>
                   <TabsTrigger value="features">Features</TabsTrigger>
                   <TabsTrigger value="map">Map</TabsTrigger>
                   <TabsTrigger value="blockchain" className="flex items-center gap-1">
                     <Shield className="h-4 w-4" />
                     Blockchain
+                  </TabsTrigger>
+                  <TabsTrigger value="analytics" className="flex items-center gap-1">
+                    <Activity className="h-4 w-4" />
+                    Analytics
                   </TabsTrigger>
                 </TabsList>
                 <TabsContent value="details" className="pt-6">
@@ -208,55 +216,166 @@ export default function PropertyPage({ params }: { params: { id: string } }) {
                   </div>
                 </TabsContent>
                 <TabsContent value="map" className="pt-6">
-                  <div className="aspect-video bg-gray-200 rounded-lg flex items-center justify-center">
-                    <p className="text-gray-500">Map view would be displayed here</p>
+                  <div className="aspect-video rounded-lg">
+                    {property.location && (
+                      <PropertyMap
+                        center={[property.location.lat, property.location.lng]}
+                        zoom={15}
+                        markers={[
+                          {
+                            position: [property.location.lat, property.location.lng],
+                            title: property.title,
+                            price: property.price,
+                          },
+                        ]}
+                      />
+                    )}
                   </div>
                 </TabsContent>
                 <TabsContent value="blockchain" className="pt-6">
                   <div className="space-y-6">
-                    <PropertyBlockchainDetails propertyId={property.id} />
-                    <PropertyTokenization propertyId={property.id} />
-                    <PropertyMarketplace propertyId={property.id} />
+                    <div>
+                      <h2 className="text-xl font-semibold mb-4">Blockchain Features</h2>
+                      <p className="text-gray-700 leading-relaxed mb-6">
+                        This property is enabled with blockchain technology for secure ownership, transparent
+                        transactions, and fractional investment opportunities.
+                      </p>
+
+                      <div className="grid gap-6 lg:grid-cols-2">
+                        <PropertyBlockchainDetails propertyId={property.id} />
+
+                        <div className="space-y-6">
+                          <PropertyMarketplace
+                            propertyId={property.id}
+                            propertyPrice={property.price}
+                            isOwner={false} // This would be dynamically determined in a real app
+                          />
+
+                          <PropertyTokenization
+                            propertyId={property.id}
+                            propertyPrice={property.price}
+                            isOwner={false} // This would be dynamically determined in a real app
+                          />
+                        </div>
+                      </div>
+                    </div>
                   </div>
+                </TabsContent>
+                <TabsContent value="analytics" className="pt-6">
+                  <PropertyAnalytics
+                    propertyId={property.id}
+                    currentPrice={property.price}
+                    historicalValues={getPropertyAnalytics(property.id).historicalValues}
+                    estimatedValue={getPropertyAnalytics(property.id).estimatedValue}
+                    saleHistory={getPropertyAnalytics(property.id).saleHistory}
+                    marketHeat={getPropertyAnalytics(property.id).marketHeat}
+                    neighborhoodAvgPrice={getPropertyAnalytics(property.id).neighborhoodAvgPrice}
+                    pricePerSqft={getPropertyAnalytics(property.id).pricePerSqft}
+                    sqft={property.sqft}
+                  />
                 </TabsContent>
               </Tabs>
             </div>
 
-            {/* Sidebar */}
             <div className="space-y-6">
               <Card>
                 <CardContent className="p-6">
-                  <div className="flex items-center gap-4">
+                  <div className="flex items-center gap-4 mb-6">
                     <Image
-                      src={property.agent.image}
+                      src={property.agent.image || "/placeholder.svg"}
                       alt={property.agent.name}
-                      width={64}
-                      height={64}
+                      width={60}
+                      height={60}
                       className="rounded-full"
                     />
                     <div>
-                      <p className="font-medium">{property.agent.name}</p>
-                      <p className="text-sm text-gray-500">{property.agent.email}</p>
+                      <h3 className="font-semibold">{property.agent.name}</h3>
+                      <p className="text-sm text-gray-500">Property Agent</p>
                     </div>
                   </div>
-                  <div className="mt-4 space-y-2">
-                    <Button variant="outline" size="sm" className="w-full gap-2">
-                      <Phone className="h-4 w-4" />
-                      Call Agent
-                    </Button>
-                    <Button variant="outline" size="sm" className="w-full gap-2">
-                      <Mail className="h-4 w-4" />
-                      Email Agent
-                    </Button>
+                  <div className="space-y-4">
+                    <div className="flex items-center gap-2">
+                      <Phone className="h-4 w-4 text-gray-500" />
+                      <span>{property.agent.phone}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Mail className="h-4 w-4 text-gray-500" />
+                      <span>{property.agent.email}</span>
+                    </div>
+                    <Button className="w-full bg-teal hover:bg-teal/90">Contact Agent</Button>
                   </div>
                 </CardContent>
               </Card>
-              <ContactForm />
+
+              <Card>
+                <CardContent className="p-6">
+                  <h3 className="font-semibold mb-4">Schedule a Tour</h3>
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="grid gap-2">
+                        <label htmlFor="tour-date" className="text-sm font-medium leading-none">
+                          Date
+                        </label>
+                        <input
+                          type="date"
+                          id="tour-date"
+                          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        />
+                      </div>
+                      <div className="grid gap-2">
+                        <label htmlFor="tour-time" className="text-sm font-medium leading-none">
+                          Time
+                        </label>
+                        <input
+                          type="time"
+                          id="tour-time"
+                          className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                        />
+                      </div>
+                    </div>
+                    <div className="grid gap-2">
+                      <label htmlFor="tour-type" className="text-sm font-medium leading-none">
+                        Tour Type
+                      </label>
+                      <Select>
+                        <SelectTrigger id="tour-type">
+                          <SelectValue placeholder="In-Person Tour" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="in-person">In-Person Tour</SelectItem>
+                          <SelectItem value="video">Video Tour</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                    <Button className="w-full bg-teal hover:bg-teal/90">Schedule Tour</Button>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardContent className="p-6">
+                  <h3 className="font-semibold mb-4">Property Location</h3>
+                  <div className="aspect-square rounded-md overflow-hidden">
+                    {property.location && (
+                      <PropertyMap
+                        center={[property.location.lat, property.location.lng]}
+                        zoom={14}
+                        markers={[
+                          {
+                            position: [property.location.lat, property.location.lng],
+                            title: property.title,
+                          },
+                        ]}
+                      />
+                    )}
+                  </div>
+                  <p className="mt-2 text-sm text-gray-500">{property.address}</p>
+                </CardContent>
+              </Card>
             </div>
           </div>
         </div>
       </main>
-      <SiteFooter />
     </div>
   )
 }

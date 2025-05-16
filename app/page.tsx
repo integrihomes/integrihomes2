@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Slider } from "@/components/ui/slider"
-import { Search, MapPin, ArrowRight, Phone, Mail, Clock, Check, Home, MapIcon } from 'lucide-react'
+import { Search, MapPin, ArrowRight, Phone, Mail, Clock, Check, Home, MapIcon } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
 import { PropertyCard } from "@/components/property-card"
@@ -11,7 +11,9 @@ import { SiteFooter } from "@/components/site-footer"
 import { FeaturedProperty } from "@/components/featured-property"
 import { VideoBackground } from "@/components/video-background"
 import { BlockchainSection } from "@/components/blockchain-section"
+import PropertyMap from "@/components/PropertyMap"
 import type { Metadata } from "next"
+import { properties } from "@/data/properties"
 
 export const metadata: Metadata = {
   title: "IntegriHomes - Where Integrity Meets Home",
@@ -155,6 +157,43 @@ export default function HomePage() {
               </div>
             </div>
           </VideoBackground>
+        </section>
+
+        {/* Property Map Integration - Added directly after welcome message */}
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-white">
+          <div className="container px-4 md:px-6">
+            <div className="flex flex-col items-center justify-center space-y-4 text-center mb-8">
+              <div className="space-y-2">
+                <div className="inline-block rounded-lg bg-muted px-3 py-1 text-sm text-teal">Explore</div>
+                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-navy">
+                  Discover Properties Across Ghana
+                </h2>
+                <p className="max-w-[900px] text-gray-600 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
+                  Browse our interactive map to find verified properties in your desired location.
+                </p>
+              </div>
+            </div>
+            <div className="rounded-xl overflow-hidden shadow-xl border border-gray-100">
+              <PropertyMap
+                properties={properties}
+                height="500px"
+                initialViewState={{
+                  latitude: 5.6037,
+                  longitude: -0.187,
+                  zoom: 9,
+                }}
+                className="w-full"
+              />
+            </div>
+            <div className="flex justify-center mt-6">
+              <Link href="/map-search">
+                <Button size="lg" className="gap-1.5 bg-teal hover:bg-teal/90">
+                  View Full Map Search
+                  <MapIcon className="h-4 w-4" />
+                </Button>
+              </Link>
+            </div>
+          </div>
         </section>
 
         <section className="w-full py-12 md:py-24 lg:py-32 bg-white">

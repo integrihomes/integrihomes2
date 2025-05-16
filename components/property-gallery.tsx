@@ -14,6 +14,7 @@ export function PropertyGallery({ images = [] }: PropertyGalleryProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [dialogImageIndex, setDialogImageIndex] = useState(0)
 
+  // Use default images if none provided
   const galleryImages =
     images.length > 0
       ? images
@@ -105,6 +106,7 @@ export function PropertyGallery({ images = [] }: PropertyGalleryProps) {
               className="rounded-lg object-cover w-full"
             />
 
+            {/* Dialog navigation buttons */}
             <div className="absolute inset-0 flex items-center justify-between p-4">
               <Button
                 variant="ghost"
@@ -126,6 +128,7 @@ export function PropertyGallery({ images = [] }: PropertyGalleryProps) {
               </Button>
             </div>
 
+            {/* Image counter */}
             <div className="absolute bottom-4 right-4 bg-black/50 text-white px-2 py-1 rounded-md text-sm">
               {dialogImageIndex + 1} / {galleryImages.length}
             </div>
@@ -169,6 +172,7 @@ export function PropertyGallery({ images = [] }: PropertyGalleryProps) {
                   className="rounded-lg object-cover w-full"
                 />
 
+                {/* Dialog navigation buttons */}
                 <div className="absolute inset-0 flex items-center justify-between p-4">
                   <Button
                     variant="ghost"
@@ -190,6 +194,7 @@ export function PropertyGallery({ images = [] }: PropertyGalleryProps) {
                   </Button>
                 </div>
 
+                {/* Image counter */}
                 <div className="absolute bottom-4 right-4 bg-black/50 text-white px-2 py-1 rounded-md text-sm">
                   {dialogImageIndex + 1} / {galleryImages.length}
                 </div>

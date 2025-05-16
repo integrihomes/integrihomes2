@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
-import { PropertyMap } from "@/components/property-map"
+import PropertyMap from "@/components/PropertyMap"
 import { PropertyCard } from "@/components/property-card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"

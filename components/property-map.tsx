@@ -91,8 +91,8 @@ export function PropertyMap({
       try {
         // Try to dynamically import mapbox-gl
         await import("mapbox-gl/dist/mapbox-gl.css")
-        const mapboxgl = await import("mapbox-gl")
-        // If we get here, the library loaded successfully
+        // Just check if we can import it, don't actually use the import
+        await import("mapbox-gl")
         setMapLibraryLoaded(true)
       } catch (error) {
         console.error("Failed to load mapbox-gl:", error)
@@ -140,12 +140,14 @@ export function PropertyMap({
     useEffect(() => {
       // Dynamically import react-map-gl components
       import("react-map-gl").then((module) => {
+        // Import specific named exports instead of the default export
+        const { Map, Marker, Popup, NavigationControl, FullscreenControl } = module
         setMapGL({
-          Map: module.Map,
-          Marker: module.Marker,
-          Popup: module.Popup,
-          NavigationControl: module.NavigationControl,
-          FullscreenControl: module.FullscreenControl,
+          Map,
+          Marker,
+          Popup,
+          NavigationControl,
+          FullscreenControl,
         })
       })
     }, [])

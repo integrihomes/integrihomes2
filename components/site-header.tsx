@@ -33,9 +33,6 @@ export function SiteHeader() {
           <Link href="/verification" className="transition-colors text-navy hover:text-teal">
             Our Verification
           </Link>
-          <Link href="/agents" className="transition-colors text-navy hover:text-teal">
-            Agents
-          </Link>
           <Link href="/about" className="transition-colors text-navy hover:text-teal">
             About
           </Link>
@@ -93,9 +90,6 @@ export function SiteHeader() {
                 </Link>
                 <Link href="/verification" className="text-navy hover:text-teal">
                   Our Verification
-                </Link>
-                <Link href="/agents" className="text-navy hover:text-teal">
-                  Agents
                 </Link>
                 <Link href="/about" className="text-navy hover:text-teal">
                   About
