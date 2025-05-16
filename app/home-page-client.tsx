@@ -13,35 +13,17 @@ import { BlockchainSection } from "@/components/blockchain-section"
 import { PropertySearchHeader } from "@/components/property-search-header"
 import { PropertySearchResults } from "@/components/property-search-results"
 import { properties } from "@/data/properties"
-import { geocodeLocation } from "@/services/geocoding-service"
 
-export default function HomePage() {
+export default function HomePageClient() {
   const [searchActive, setSearchActive] = useState(false)
   const [searchLocation, setSearchLocation] = useState("")
   const [searchFilters, setSearchFilters] = useState({})
   const [filteredProperties, setFilteredProperties] = useState(properties)
-  const [mapCoordinates, setMapCoordinates] = useState<{ lat: number; lng: number; zoom: number } | undefined>(
-    undefined,
-  )
 
-  const handleSearch = (location: string, filters: any, coordinates?: { lat: number; lng: number; zoom: number }) => {
+  const handleSearch = (location: string, filters: any) => {
     setSearchLocation(location)
     setSearchFilters(filters)
     setSearchActive(true)
-
-    if (coordinates) {
-      setMapCoordinates(coordinates)
-    } else if (location) {
-      // Try to geocode the location if coordinates weren't provided
-      const geoLocation = geocodeLocation(location)
-      if (geoLocation) {
-        setMapCoordinates({
-          lat: geoLocation.lat,
-          lng: geoLocation.lng,
-          zoom: geoLocation.zoom,
-        })
-      }
-    }
 
     // Filter properties based on location
     const filtered = properties.filter((property) => {
@@ -64,17 +46,8 @@ export default function HomePage() {
 
       {searchActive ? (
         <>
-          <PropertySearchHeader
-            onSearch={handleSearch}
-            className="sticky top-0 z-10"
-            initialLocation={searchLocation}
-          />
-          <PropertySearchResults
-            location={searchLocation}
-            properties={filteredProperties}
-            filters={searchFilters}
-            coordinates={mapCoordinates}
-          />
+          <PropertySearchHeader onSearch={handleSearch} className="sticky top-0 z-10" />
+          <PropertySearchResults location={searchLocation} properties={filteredProperties} filters={searchFilters} />
         </>
       ) : (
         <main className="flex-1">
@@ -124,18 +97,7 @@ export default function HomePage() {
                           e.preventDefault()
                           const formData = new FormData(e.currentTarget)
                           const location = formData.get("location") as string
-
-                          // Try to geocode the location
-                          const geoLocation = geocodeLocation(location)
-                          if (geoLocation) {
-                            handleSearch(
-                              geoLocation.name,
-                              {},
-                              { lat: geoLocation.lat, lng: geoLocation.lng, zoom: geoLocation.zoom },
-                            )
-                          } else {
-                            handleSearch(location, {})
-                          }
+                          handleSearch(location, {})
                         }}
                         className="grid gap-4"
                       >
