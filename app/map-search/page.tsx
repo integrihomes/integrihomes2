@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
-import PropertyMap from "@/components/PropertyMap"
+import AccraMap from "@/components/AccraMap"
 import { PropertyCard } from "@/components/property-card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -28,6 +28,8 @@ export default function MapSearchPage() {
   })
   const [isFilterOpen, setIsFilterOpen] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
+  const [searchTerm, setSearchTerm] = useState("")
+  const [filteredProperties, setFilteredProperties] = useState(properties)
 
   // Check if mobile on mount
   useEffect(() => {
@@ -46,9 +48,24 @@ export default function MapSearchPage() {
     }
   }, [])
 
+  // Add coordinates to properties for Accra
+  const propertiesWithCoordinates = properties.map((property, index) => {
+    // Generate some coordinates around Accra for demo purposes
+    const latOffset = (Math.random() - 0.5) * 0.05
+    const lngOffset = (Math.random() - 0.5) * 0.05
+
+    return {
+      ...property,
+      coordinates: {
+        lat: 5.6037 + latOffset,
+        lng: -0.187 + lngOffset,
+      },
+    }
+  })
+
   // Apply filters
   useEffect(() => {
-    let filteredProperties = [...allProperties]
+    let filteredProperties = [...propertiesWithCoordinates]
 
     // Filter by location
     if (filters.location) {
@@ -87,8 +104,23 @@ export default function MapSearchPage() {
       filteredProperties = filteredProperties.filter((property) => property.verified)
     }
 
-    setProperties(filteredProperties)
+    setFilteredProperties(filteredProperties)
   }, [filters])
+
+  // Apply search term filter
+  useEffect(() => {
+    if (searchTerm) {
+      setFilteredProperties(
+        propertiesWithCoordinates.filter(
+          (property) =>
+            property.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            property.address.toLowerCase().includes(searchTerm.toLowerCase()),
+        ),
+      )
+    } else {
+      setFilteredProperties(propertiesWithCoordinates)
+    }
+  }, [searchTerm, propertiesWithCoordinates])
 
   const handlePropertyClick = (property: Property) => {
     setSelectedProperty(property.id)
@@ -110,6 +142,7 @@ export default function MapSearchPage() {
       baths: "any",
       verified: false,
     })
+    setSearchTerm("")
   }
 
   return (
@@ -131,8 +164,8 @@ export default function MapSearchPage() {
                   <Input
                     placeholder="Search by location, address, or region"
                     className="pl-10"
-                    value={filters.location}
-                    onChange={(e) => handleFilterChange("location", e.target.value)}
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
                   />
                 </div>
                 <div className="flex gap-2 w-full md:w-auto">
@@ -267,7 +300,7 @@ export default function MapSearchPage() {
             {/* Results Count */}
             <div className="mb-4">
               <p className="text-gray-600">
-                {properties.length} {properties.length === 1 ? "property" : "properties"} found
+                {filteredProperties.length} {filteredProperties.length === 1 ? "property" : "properties"} found
               </p>
             </div>
 
@@ -302,10 +335,10 @@ export default function MapSearchPage() {
               {/* Map View */}
               {(viewMode === "map" || viewMode === "split") && (
                 <div className={viewMode === "map" ? "mb-6" : ""}>
-                  <PropertyMap
-                    properties={properties}
+                  <AccraMap
+                    properties={filteredProperties}
                     height={viewMode === "map" ? "70vh" : "600px"}
-                    onMarkerClick={handlePropertyClick}
+                    onSelectProperty={(property) => handlePropertyClick(property)}
                     selectedPropertyId={selectedProperty || undefined}
                     className={viewMode === "map" ? "sticky top-20" : ""}
                   />
@@ -320,7 +353,7 @@ export default function MapSearchPage() {
                 `}
                 >
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-                    {properties.map((property) => (
+                    {filteredProperties.map((property) => (
                       <PropertyCard
                         key={property.id}
                         id={property.id}
@@ -339,7 +372,7 @@ export default function MapSearchPage() {
                     ))}
                   </div>
 
-                  {properties.length === 0 && (
+                  {filteredProperties.length === 0 && (
                     <div className="text-center py-12">
                       <p className="text-gray-500 mb-4">No properties match your search criteria</p>
                       <Button variant="outline" onClick={clearFilters}>

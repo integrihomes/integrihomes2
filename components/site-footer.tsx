@@ -1,11 +1,29 @@
+"use client"
+
 import { Facebook, Twitter, Instagram, Linkedin } from "lucide-react"
 import Link from "next/link"
 import { Logo } from "@/components/logo"
 
 export function SiteFooter() {
   return (
-    <footer className="w-full border-t bg-navy text-white">
-      <div className="container px-4 py-12 md:px-6 md:py-16 lg:py-20">
+    <footer className="w-full border-t text-white relative overflow-hidden">
+      {/* Background elements */}
+      <div className="absolute inset-0 bg-gradient-to-br from-navy via-navy/90 to-teal/80 z-0"></div>
+      <div className="absolute inset-0 bg-grid-white/5 z-0"></div>
+      <div className="absolute right-0 top-0 h-full w-1/2 bg-teal/10 rounded-l-full blur-3xl z-0"></div>
+
+      {/* Animated dots */}
+      <div className="absolute inset-0 z-0">
+        <div className="integrity-dots"></div>
+      </div>
+
+      {/* Floating elements */}
+      <div className="absolute top-20 left-20 w-24 h-24 bg-gold/20 rounded-full blur-xl animate-pulse"></div>
+      <div
+        className="absolute bottom-20 right-20 w-32 h-32 bg-teal/20 rounded-full blur-xl animate-pulse"
+        style={{ animationDelay: "1.5s" }}
+      ></div>
+      <div className="container px-4 py-12 md:px-6 md:py-16 lg:py-20 relative z-10">
         <div className="grid gap-8 sm:grid-cols-2 md:grid-cols-4">
           <div>
             <Link href="/" className="flex items-center gap-2 mb-4">
@@ -87,7 +105,7 @@ export function SiteFooter() {
                 Diaspora Services
               </Link>
               <Link href="#" className="text-gray-300 hover:text-gold">
-                Ghana Real Estate Market
+                Real Estate Market Insights
               </Link>
               <Link href="#" className="text-gray-300 hover:text-gold">
                 FAQ
@@ -110,6 +128,29 @@ export function SiteFooter() {
           </div>
         </div>
       </div>
+
+      <style jsx>{`
+      .bg-grid-white\/5 {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32' width='32' height='32' fill='none' stroke='rgb(255 255 255 / 0.05)'%3e%3cpath d='M0 .5H31.5V32'/%3e%3c/svg%3e");
+      }
+      
+      .integrity-dots {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-image: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+        background-size: 30px 30px;
+      }
+      
+      @keyframes pulse {
+        0%, 100% { opacity: 0.5; }
+        50% { opacity: 0.8; }
+      }
+      
+      .animate-pulse {
+        animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+      }
+    `}</style>
     </footer>
   )
 }
