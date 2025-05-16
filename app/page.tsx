@@ -1,3 +1,4 @@
+import { PropertyMap } from "@/components/PropertyMap";
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -316,11 +317,35 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section id="properties" className="w-full py-12 md:py-24 lg:py-32 bg-muted">
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center">
-              <div className="space-y-2">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-navy">Browse Properties</h2>
+      <section id="properties" className="w-full py-12 md:py-24 lg:py-32 bg-muted">
+  <div className="container px-4 md:px-6">
+    <div className="flex flex-col items-center justify-center space-y-4 text-center">
+      <div className="space-y-2">
+        <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl text-navy">
+          Browse Properties
+        </h2>
+        {/* ...existing cards and content here... */}
+      </div>
+    </div>
+  </div>
+</section> 
+
+<section className="w-full py-12 md:py-24 lg:py-32 bg-white">
+  <div className="container px-4 md:px-6">
+    <div className="flex flex-col items-center justify-center space-y-4 text-center">
+      <div className="space-y-2 w-full">
+        <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl text-navy">
+          Explore Properties on the Map
+        </h2>
+        <div className="w-full h-[600px] rounded-md overflow-hidden">
+          <PropertyMap />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
                 <p className="max-w-[900px] text-gray-600 md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
                   Find your perfect home or land from our extensive collection of verified properties across Ghana.
                 </p>
